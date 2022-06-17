@@ -1,0 +1,20 @@
+#!/bin/bash
+
+cd /usr/local/bin
+count=`cat crypto4_count.txt`
+teamName=`cat crypto4_owner.txt`
+echo "This service is now pwned by $teamName"
+
+plainText=`./getRandomPhrase.sh words.txt | ./toUpper.sh`
+cypherText=`echo $plainText | ./md5`
+echo "$cypherText"
+ 
+echo; echo "Enter plain text"
+read guess
+
+if [[ `echo $guess | ./toUpper.sh` == $plainText ]]; then
+  echo Please enter Team Name
+  read teamName 
+  echo "$teamName" > crypto4_owner.txt
+  echo $((count+1)) > crypto4_count.txt
+fi

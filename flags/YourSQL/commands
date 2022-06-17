@@ -1,0 +1,6 @@
+open table
+save table
+show table
+add record
+remove record
+leave

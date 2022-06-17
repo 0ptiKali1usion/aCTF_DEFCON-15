@@ -1,0 +1,43 @@
+#!/bin/bash
+
+cd /usr/local/bin
+count=`cat crypto6_count.txt`
+teamName=`cat crypto6_owner.txt`
+echo "This service is now pwned by $teamName"
+
+plainText=`./getRandomPhrase.sh words.txt`
+while [[ ${#plainText} -lt 25 ]] ; do 
+  plainText=`./getRandomPhrase.sh words.txt`
+done
+ 
+#plainText=`echo $plainText | toUpper.sh`
+cypherText=`echo $plainText | ./block5.sh`
+
+if [[ ($count -ge 23 && $count  -lt 45) ]]; then
+  cypherText=`echo $cypherText | ./stripSpaces.sh`
+fi
+
+if [[ $count -ge 45 && $count -lt 67 ]]; then
+  cypherText=`echo $cypherText | ./reverse.sh `
+fi
+
+if [[ $count -ge 67 && $count -lt 97 ]]; then
+  cypherText=`echo $cypherText | ./reverse.sh `
+fi
+
+if [[ $count -ge 97 ]]; then
+  cypherText=`echo $cypherText | ./md5`
+fi
+echo $cypherText
+ 
+echo; echo "Enter plain text"
+read guess
+guess=`echo $guess | ./stripSpaces.sh | sed 's/\r//g'`
+plainText=`echo $plainText | ./stripSpaces.sh | sed 's/\r//g'`
+
+if [[ "$guess" == "$plainText" ]]; then
+  echo Please enter Team Name
+  read teamName 
+  echo "$teamName" > crypto6_owner.txt
+  echo $((count+1)) > crypto6_count.txt
+fi

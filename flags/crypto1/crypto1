@@ -1,0 +1,34 @@
+#!/bin/bash
+
+cd /usr/local/bin
+count=`cat crypto1_count.txt`
+teamName=`cat crypto1_owner.txt`
+echo "This service is now pwned by $teamName"
+
+plainText=`./getRandomPhrase.sh ./words.txt | ./toUpper.sh`
+cypherText=`echo $plainText | ./rotation`
+
+if [[ $count -ge 50 ]]; then
+  cypherText=`echo $cypherText | ./stripSpaces.sh`  
+fi
+
+if [[ $count -ge 75 ]]; then
+  cypherText=`echo $cypherText | ./reverse.sh`
+fi
+
+if [[ $count -ge 125 ]]; then
+  cypherText=`echo $cypherText | ./sha`
+fi
+echo $cypherText
+ 
+echo; echo "Enter plain text"
+read guess
+guess=`echo $guess | ./stripSpaces.sh | sed 's/\r//g'`
+plainText=`echo $plainText | ./stripSpaces.sh`
+
+if [[ $guess == $plainText ]]; then
+  echo Please enter Team Name
+  read teamName 
+  echo "$teamName" > crypto1_owner.txt
+  echo $((count+1)) > crypto1_count.txt
+fi

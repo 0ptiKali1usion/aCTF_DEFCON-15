@@ -1,0 +1,20 @@
+<html>
+ <body>
+  <h1>Log in please</h1>
+  <!-- The HTML comments just never get old, do they? -->
+  <form action="login.php" method="post" >
+   <div>
+    <span>Username: </span>
+    <span><input type="text" name="user" id="user" /></span>
+   </div>
+   <div>
+    <span>Password: </span>
+    <span><input type="password" name="pass" id="pass" /></span>
+   </div>
+   <div>
+    <span><input type="submit" name="submit" id="submit" value="Login" /></span>
+   </div>
+  </form>
+  <!-- FYI, the flag is at flag.php, feel free to look at it. -->
+ </body>
+</html>
